@@ -7,16 +7,13 @@ body {
     padding: 0;
 }
 #container {
+    margin:30px;
     display: flex;
     flex-wrap: wrap;
-    flex: 0 1 90vh;
     border: 1px solid grey;
     aspect-ratio: 1/1;
-    
 }
-.grid {
-    flex: 0 1 6.25%;
-}
+
 .painted{
     background-color: blueviolet;
 }
