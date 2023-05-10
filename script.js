@@ -4,6 +4,7 @@ const rainbowBtn = document.querySelector("#rainbow");
 const clearBtn = document.querySelector("#clear");
 const slider = document.querySelector("#slider");
 const picker = document.querySelector("#picker");
+const toggleGrid = document.querySelector("#toggleGrid");
 /* ---------------------------------------------------------------------- */
 let mouseClicked = false;
 document
@@ -21,6 +22,9 @@ function newGrid(squaresPerSide) {
     for (let i = 1; i <= amount; i++) {
         const tempDiv = document.createElement("div");
         tempDiv.classList.add("grid");
+        if (toggleGrid.checked) {
+            tempDiv.classList.add("toggled");
+        }
         tempDiv.style.cssText = `flex: 0 1 ${relativeSize}%;`;
         tempDiv.addEventListener("mouseover", (event) => {
             if (mouseClicked) {
@@ -56,5 +60,12 @@ let mode = "color";
 colorBtn.addEventListener("click", () => (mode = "color"));
 rainbowBtn.addEventListener("click", () => (mode = "rainbow"));
 picker.addEventListener("click", () => (mode = "color"));
+/* ---------------------------------------------------------------------- */
+toggleGrid.addEventListener("input", () => {
+    let grid = document.querySelectorAll(".grid");
+    grid.forEach((item) => {
+        item.classList.toggle("toggled");
+    });
+});
 /* ---------------------------------------------------------------------- */
 newGrid(slider.value);

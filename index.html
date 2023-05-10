@@ -8,12 +8,15 @@
         <script src="script.js" defer></script>
         <link rel="stylesheet" href="style.css" />
     </head>
-    <body>
+    <body ondragstart="return false;" ondrop="return false;">
         <h1 class="title">Etch-A-Sketch</h1>
         <div class="panel">
+            <input type="color" id="picker" value="#000000" />
             <button id="color">Color mode</button>
             <button id="rainbow">Rainbow</button>
             <button id="clear">Clear</button>
+            <div class="break"></div>
+            <label for="slider">Canvas size:</label>
             <input
                 id="slider"
                 type="range"
@@ -22,7 +25,11 @@
                 value="16"
                 step="1"
             />
+            
+            <label for="toggleGrid">Toggle grid:</label>
+            <input id="toggleGrid" type="checkbox">
         </div>
+        
         <div class="break"></div>
 
         <div id="container"></div>
