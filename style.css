@@ -1,19 +1,48 @@
 body {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-content: center;
     height: 100vh;
+    margin-top: -25px;
+    padding: 0 25px;
+    gap: 10px;
+}
+body .title {
+    font-size: 60px;
     margin: 0;
-    padding: 0;
+    flex: 1 1 100vw;
+    text-align: center;
 }
 #container {
-    margin:30px;
     display: flex;
     flex-wrap: wrap;
     border: 1px solid grey;
     aspect-ratio: 1/1;
 }
+.panel {
+    margin: 25px 0;
+    width: 60vh;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+.panel * {
+    flex: 1;
+}
+button{
+    min-width: 150px;
+}
 
-.painted{
+/* .panel *{
+max-width: 25vw; 
+flex: 1 1 auto;
+} */
+
+.painted {
     background-color: blueviolet;
+}
+.break {
+    flex-basis: 100%;
+    height: 0;
 }
