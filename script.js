@@ -6,13 +6,11 @@ const slider = document.querySelector("#slider");
 const picker = document.querySelector("#picker");
 const toggleGrid = document.querySelector("#toggleGrid");
 /* ---------------------------------------------------------------------- */
-let mouseClicked = false;
-document
-    .querySelector("body")
-    .addEventListener("mousedown", () => (mouseClicked = true));
-document
-    .querySelector("body")
-    .addEventListener("mouseup", () => (mouseClicked = false));
+let mouseDown = false;
+
+document.body.onmouseup = () => {
+    mouseDown = false;
+};
 /* ---------------------------------------------------------------------- */
 function newGrid(squaresPerSide) {
     container.style.cssText = "flex: 0 1 60vh;";
@@ -26,22 +24,28 @@ function newGrid(squaresPerSide) {
             tempDiv.classList.add("toggled");
         }
         tempDiv.style.cssText = `flex: 0 1 ${relativeSize}%;`;
-        tempDiv.addEventListener("mouseover", (event) => {
-            if (mouseClicked) {
-                let color;
-                if (mode === "color") {
-                    color = picker.value;
-                } else if (mode === "rainbow") {
-                    let r = Math.random() * 255;
-                    let g = Math.random() * 255;
-                    let b = Math.random() * 255;
-                    color = `rgb(${r}, ${g}, ${b})`;
-                }
-                tempDiv.style.backgroundColor = color;
-            }
+        tempDiv.addEventListener("mouseover", draw);
+        tempDiv.addEventListener("mousedown", (event) => {
+            mouseDown = true;
+            draw(event);
         });
+
         container.appendChild(tempDiv);
     }
+}
+function draw(event) {
+    if (!mouseDown) return;
+    console.log(event.target);
+    let color;
+    if (mode === "color") {
+        color = picker.value;
+    } else if (mode === "rainbow") {
+        let r = Math.random() * 255;
+        let g = Math.random() * 255;
+        let b = Math.random() * 255;
+        color = `rgb(${r}, ${g}, ${b})`;
+    }
+    event.target.style.backgroundColor = color;
 }
 /* ---------------------------------------------------------------------- */
 function clear() {
@@ -52,6 +56,8 @@ function clear() {
     newGrid(slider.value);
 }
 clearBtn.addEventListener("click", clear);
+/* ---------------------------------------------------------------------- */
+
 slider.addEventListener("input", (event) => {
     clear();
 });
