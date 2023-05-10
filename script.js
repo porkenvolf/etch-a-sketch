@@ -3,7 +3,16 @@ const colorBtn = document.querySelector("#color");
 const rainbowBtn = document.querySelector("#rainbow");
 const clearBtn = document.querySelector("#clear");
 const slider = document.querySelector("#slider");
-
+const picker = document.querySelector("#picker");
+/* ---------------------------------------------------------------------- */
+let mouseClicked = false;
+document
+    .querySelector("body")
+    .addEventListener("mousedown", () => (mouseClicked = true));
+document
+    .querySelector("body")
+    .addEventListener("mouseup", () => (mouseClicked = false));
+/* ---------------------------------------------------------------------- */
 function newGrid(squaresPerSide) {
     container.style.cssText = "flex: 0 1 60vh;";
 
@@ -14,12 +23,23 @@ function newGrid(squaresPerSide) {
         tempDiv.classList.add("grid");
         tempDiv.style.cssText = `flex: 0 1 ${relativeSize}%;`;
         tempDiv.addEventListener("mouseover", (event) => {
-            tempDiv.classList.toggle("painted");
+            if (mouseClicked) {
+                let color;
+                if (mode === "color") {
+                    color = picker.value;
+                } else if (mode === "rainbow") {
+                    let r = Math.random() * 255;
+                    let g = Math.random() * 255;
+                    let b = Math.random() * 255;
+                    color = `rgb(${r}, ${g}, ${b})`;
+                }
+                tempDiv.style.backgroundColor = color;
+            }
         });
         container.appendChild(tempDiv);
     }
 }
-
+/* ---------------------------------------------------------------------- */
 function clear() {
     const grid = document.querySelectorAll(".grid");
     grid.forEach((item) => {
@@ -28,7 +48,13 @@ function clear() {
     newGrid(slider.value);
 }
 clearBtn.addEventListener("click", clear);
-slider.addEventListener("change", (event) => {
+slider.addEventListener("input", (event) => {
     clear();
 });
+/* ---------------------------------------------------------------------- */
+let mode = "color";
+colorBtn.addEventListener("click", () => (mode = "color"));
+rainbowBtn.addEventListener("click", () => (mode = "rainbow"));
+picker.addEventListener("click", () => (mode = "color"));
+/* ---------------------------------------------------------------------- */
 newGrid(slider.value);
